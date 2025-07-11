@@ -23,7 +23,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ currentPage, onPageChange }) =
   const menuItems = [
     { id: 'dashboard', label: 'Dashboard', icon: LayoutDashboard },
     { id: 'asset-registry', label: 'Asset Registry', icon: Package },
-    { id: 'transfers', label: 'Transfers', icon: ArrowRightLeft },
+    { id: 'transfers', label: 'Transfers', icon: ArrowRightLeft},
     { id: 'audits', label: 'Audits', icon: ClipboardCheck },
     { id: 'dealer-ledger', label: 'Dealer Ledger', icon: Building2 },
     { id: 'maintenance', label: 'Maintenance', icon: Wrench },
@@ -31,6 +31,9 @@ export const Sidebar: React.FC<SidebarProps> = ({ currentPage, onPageChange }) =
     { id: 'users-roles', label: 'Users & Roles', icon: Users },
     { id: 'settings', label: 'Settings', icon: Settings },
   ];
+
+  // Only these should be enabled
+  const enabledIds = ['dashboard', 'asset-registry'];
 
   return (
     <div className="w-64 bg-white border-r border-gray-200 h-screen flex flex-col">
@@ -52,18 +55,21 @@ export const Sidebar: React.FC<SidebarProps> = ({ currentPage, onPageChange }) =
           {menuItems.map((item) => {
             const Icon = item.icon;
             const isActive = currentPage === item.id;
-            
+            const isEnabled = enabledIds.includes(item.id);
+
             return (
               <li key={item.id}>
                 <button
-                  onClick={() => onPageChange(item.id)}
-                  className={`w-full flex items-center gap-3 px-3 py-2.5 text-sm font-medium rounded-lg transition-all duration-200 ${
-                    isActive
-                      ? 'bg-indigo-50 text-indigo-700 border-r-2 border-indigo-600'
-                      : 'text-gray-700 hover:bg-gray-50 hover:text-gray-900'
-                  }`}
+                  onClick={() => isEnabled && onPageChange(item.id)}
+                  disabled={!isEnabled}
+                  className={`w-full flex items-center gap-3 px-3 py-2.5 text-sm font-medium rounded-lg transition-all duration-200
+                    ${isActive && isEnabled ? 'bg-indigo-50 text-indigo-700 border-r-2 border-indigo-600' : ''}
+                    ${isEnabled ? 'text-gray-700 hover:bg-gray-50 hover:text-gray-900' : 'text-gray-400 cursor-not-allowed bg-gray-50'}
+                  `}
+                  tabIndex={isEnabled ? 0 : -1}
+                  aria-disabled={!isEnabled}
                 >
-                  <Icon className={`h-5 w-5 ${isActive ? 'text-indigo-600' : 'text-gray-500'}`} />
+                  <Icon className={`h-5 w-5 ${isActive && isEnabled ? 'text-indigo-600' : isEnabled ? 'text-gray-500' : 'text-gray-300'}`} />
                   <span>{item.label}</span>
                 </button>
               </li>
