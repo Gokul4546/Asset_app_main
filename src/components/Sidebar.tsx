@@ -36,7 +36,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ currentPage, onPageChange }) =
   const enabledIds = ['dashboard', 'asset-registry'];
 
   return (
-    <div className="w-64 bg-white border-r border-gray-200 h-screen flex flex-col">
+    <div className="w-64 bg-white border-r border-gray-200 min-h-screen flex flex-col">
       {/* Logo and Brand */}
       <div className="p-6 border-b border-gray-200">
         <div className="flex items-center gap-3">
@@ -79,7 +79,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ currentPage, onPageChange }) =
       </nav>
 
       {/* User Profile Section */}
-      <div className="p-4 border-t border-gray-200">
+      <div className="p-4 border-t border-gray-200 mt-auto">
         <div className="flex items-center gap-3 p-3 rounded-lg hover:bg-gray-50 cursor-pointer transition-colors">
           <div className="w-8 h-8 bg-gradient-to-br from-purple-500 to-pink-500 rounded-lg flex items-center justify-center">
             <User className="h-4 w-4 text-white" />

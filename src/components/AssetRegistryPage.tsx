@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Plus } from 'lucide-react';
 import { ListControls } from './ListControls';
 import { FilterBar } from './FilterBar';
 import { AssetTable } from './AssetTable';
@@ -7,9 +8,11 @@ import { AssetGrid } from './AssetGrid';
 import { BulkActions } from './BulkActions';
 import { Pagination } from './Pagination';
 import { useAssets } from '../hooks/useAssets';
+import { AddAssetModal } from './AddAssetModal';
 
 export const AssetRegistryPage: React.FC = () => {
   const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
+  const [isAddModalOpen, setIsAddModalOpen] = useState(false);
   const {
     assets,
     searchTerm,
@@ -57,8 +60,22 @@ export const AssetRegistryPage: React.FC = () => {
     // Implement saved views logic here
   };
 
+  const handleAddAsset = (assetData: any) => {
+    console.log('Adding new asset:', assetData);
+    // Here you would typically add the asset to your data store
+    // For now, we'll just log it
+  };
+
   return (
-    <div className="flex-1 overflow-hidden">
+    <div className="flex-1 overflow-hidden relative">
+      {/* Add Asset Button - Fixed Position */}
+      <button
+        onClick={() => setIsAddModalOpen(true)}
+        className="fixed bottom-8 right-8 w-14 h-14 bg-gradient-to-r from-indigo-600 to-purple-600 text-white rounded-full shadow-2xl hover:from-indigo-700 hover:to-purple-700 transition-all duration-200 flex items-center justify-center z-40 hover:scale-110"
+      >
+        <Plus className="h-6 w-6" />
+      </button>
+
       <ListControls
         assets={assets}
         currentView={currentView}
@@ -129,6 +146,13 @@ export const AssetRegistryPage: React.FC = () => {
           </div>
         )}
       </div>
+
+      {/* Add Asset Modal */}
+      <AddAssetModal
+        isOpen={isAddModalOpen}
+        onClose={() => setIsAddModalOpen(false)}
+        onSubmit={handleAddAsset}
+      />
     </div>
   );
 };
