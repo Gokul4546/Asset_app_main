@@ -117,7 +117,7 @@ export const ListControls: React.FC<ListControlsProps> = ({
           </div>
         </div>
       </div>
-    </div>
+    
   );
 };
   )
