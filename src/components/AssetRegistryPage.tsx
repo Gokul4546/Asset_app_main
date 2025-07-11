@@ -68,14 +68,6 @@ export const AssetRegistryPage: React.FC = () => {
 
   return (
     <div className="flex-1 overflow-hidden relative">
-      {/* Add Asset Button - Fixed Position */}
-      <button
-        onClick={() => setIsAddModalOpen(true)}
-        className="fixed bottom-8 right-8 w-14 h-14 bg-gradient-to-r from-indigo-600 to-purple-600 text-white rounded-full shadow-2xl hover:from-indigo-700 hover:to-purple-700 transition-all duration-200 flex items-center justify-center z-40 hover:scale-110"
-      >
-        <Plus className="h-6 w-6" />
-      </button>
-
       <ListControls
         assets={assets}
         currentView={currentView}
@@ -89,6 +81,7 @@ export const AssetRegistryPage: React.FC = () => {
         onFilterChange={handleFilterChange}
         onImport={handleImport}
         onExport={handleExport}
+        onAddAsset={() => setIsAddModalOpen(true)}
       />
       
       <FilterBar

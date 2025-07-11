@@ -40,11 +40,12 @@ export const Sidebar: React.FC<SidebarProps> = ({ currentPage, onPageChange }) =
       {/* Logo and Brand */}
       <div className="p-6 border-b border-gray-200">
         <div className="flex items-center gap-3">
-          <div className="w-8 h-8 bg-gradient-to-br from-indigo-600 to-purple-600 rounded-lg flex items-center justify-center">
-            <Package className="w-4 h-4 text-white" />
+          <div className="w-8 h-8 bg-white rounded-lg flex items-center justify-center border border-gray-200">
+            <span className="text-xs font-bold text-red-600">NP</span>
           </div>
           <div>
-            <h1 className="text-lg font-semibold text-gray-900">AssetTracker Admin</h1>
+            <h1 className="text-lg font-semibold text-gray-900">Nippon Paint</h1>
+            <p className="text-xs text-gray-500">Asset Management</p>
           </div>
         </div>
       </div>
