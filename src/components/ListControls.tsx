@@ -1,5 +1,4 @@
 import React from 'react';
-import { Plus } from 'lucide-react'; // Add this!
 import { ViewToggle } from './ViewToggle';
 import { SortMenu } from './SortMenu';
 import { FilterMenu } from './FilterMenu';
@@ -40,8 +39,35 @@ export const ListControls: React.FC<ListControlsProps> = ({
   onFilterChange,
   onImport,
   onExport,
-  onAddAsset,
+  onAddAsset
 }) => {
+  const getFilteredCount = () => {
+    let count = assets.length;
+    Object.entries(activeFilters).forEach(([filterType, values]) => {
+      if (values.length > 0) {
+        count = assets.filter(asset => {
+          switch (filterType) {
+            case 'type':
+              return values.includes(asset.type);
+            case 'status':
+              return values.includes(asset.status);
+            case 'location':
+              return values.includes(asset.location);
+            case 'assignedUser':
+              return values.includes(asset.assignedUser.name);
+            default:
+              return true;
+          }
+        }).length;
+      }
+    });
+    return count;
+  };
+
+  const getActiveFilterCount = () => {
+    return Object.values(activeFilters).reduce((count, values) => count + values.length, 0);
+  };
+
   const getNeedsAttentionCount = () => {
     return assets.filter(asset => 
       asset.status === 'Needs Audit' || 
@@ -59,17 +85,18 @@ export const ListControls: React.FC<ListControlsProps> = ({
               <span className="text-gray-400">•</span>
               <span className="text-amber-600">{getNeedsAttentionCount()} need attention</span>
             </div>
-            <button
-              onClick={onAddAsset}
-              className="flex items-center gap-2 px-4 py-2.5 bg-gradient-to-r from-indigo-600 to-purple-600 text-white rounded-xl hover:from-indigo-700 hover:to-purple-700 transition-all duration-200 font-medium text-sm shadow-lg shadow-indigo-500/25 hover:shadow-indigo-500/40"
-            >
-              <Plus className="h-4 w-4" />
-              <span>Add Asset</span>
-            </button>
-          </div>
+          <button className="flex items-center gap-2 px-4 py-2.5 bg-gradient-to-r from-indigo-600 to-purple-600 text-white rounded-xl hover:from-indigo-700 hover:to-purple-700 transition-all duration-200 font-medium text-sm shadow-lg shadow-indigo-500/25 hover:shadow-indigo-500/40">
+            <Plus className="h-4 w-4" />
+            <span>Add Asset</span>
+          </button>
+          
           <div className="flex items-center gap-3">
             <ViewToggle currentView={currentView} onViewChange={onViewChange} />
-            <div className="w-px h-6 bg-gray-200"></div>
+            
+          
+          <div className="w-px h-6 bg-gray-200"></div>
+          
+          <ViewToggle currentView={currentView} onViewChange={onViewChange} />
             <SortMenu 
               currentSort={currentSort}
               currentDirection={currentDirection}
@@ -77,12 +104,15 @@ export const ListControls: React.FC<ListControlsProps> = ({
               onSort={onSort}
               onMultiSort={onMultiSort}
             />
+            
             <FilterMenu 
               assets={assets}
               activeFilters={activeFilters}
               onFilterChange={onFilterChange}
             />
+            
             <div className="w-px h-6 bg-gray-200"></div>
+            
             <ImportExportMenu onImport={onImport} onExport={onExport} />
           </div>
         </div>
@@ -90,3 +120,5 @@ export const ListControls: React.FC<ListControlsProps> = ({
     </div>
   );
 };
+  )
+}
