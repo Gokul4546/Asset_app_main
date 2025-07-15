@@ -7,9 +7,15 @@ import { AssetGrid } from './AssetGrid';
 import { BulkActions } from './BulkActions';
 import { Pagination } from './Pagination';
 import { useAssets } from '../hooks/useAssets';
+import { AddAssetModal } from './AddAssetModal';
 
-export const AssetRegistryPage: React.FC = () => {
+interface AssetRegistryPageProps {
+  onAssetClick?: (assetId: string) => void;
+}
+
+export const AssetRegistryPage: React.FC<AssetRegistryPageProps> = ({ onAssetClick }) => {
   const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
+  const [isAddModalOpen, setIsAddModalOpen] = useState(false);
   const {
     assets,
     searchTerm,
@@ -38,6 +44,11 @@ export const AssetRegistryPage: React.FC = () => {
     handleExport
   } = useAssets();
 
+  const handleAddAsset = (assetData: any) => {
+    console.log('Adding new asset:', assetData);
+    // Implement asset creation logic here
+  };
+
   React.useEffect(() => {
     const handleResize = () => {
       setIsMobile(window.innerWidth < 768);
@@ -61,6 +72,14 @@ export const AssetRegistryPage: React.FC = () => {
     <div className="flex-1 overflow-hidden">
       <ListControls
         assets={assets}
+        onImport={handleImport}
+        onExport={handleExport}
+        onAddAsset={() => setIsAddModalOpen(true)}
+      />
+      
+      <FilterBar
+        assets={assets}
+        filters={filters}
         currentView={currentView}
         onViewChange={setCurrentView}
         currentSort={sortColumn}
@@ -70,12 +89,6 @@ export const AssetRegistryPage: React.FC = () => {
         onMultiSort={handleMultiSort}
         activeFilters={activeFilters}
         onFilterChange={handleFilterChange}
-        onImport={handleImport}
-        onExport={handleExport}
-      />
-      
-      <FilterBar
-        filters={filters}
         onRemoveFilter={removeFilter}
         onClearAll={clearAllFilters}
         onSavedViews={handleSavedViews}
@@ -94,6 +107,7 @@ export const AssetRegistryPage: React.FC = () => {
               assets={paginatedAssets}
               selectedAssets={selectedAssets}
               onSelectionChange={handleSelectionChange}
+              onAssetClick={onAssetClick}
             />
           ) : (
           <div className="grid gap-4">
@@ -103,6 +117,7 @@ export const AssetRegistryPage: React.FC = () => {
                 asset={asset}
                 isSelected={selectedAssets.has(asset.id)}
                 onSelectionChange={handleSelectionChange}
+                onAssetClick={onAssetClick}
               />
             ))}
           </div>
@@ -116,6 +131,7 @@ export const AssetRegistryPage: React.FC = () => {
             onSort={handleSort}
             sortColumn={sortColumn}
             sortDirection={sortDirection}
+            onAssetClick={onAssetClick}
           />
         )}
         
@@ -129,6 +145,12 @@ export const AssetRegistryPage: React.FC = () => {
           </div>
         )}
       </div>
+      
+      <AddAssetModal
+        isOpen={isAddModalOpen}
+        onClose={() => setIsAddModalOpen(false)}
+        onSubmit={handleAddAsset}
+      />
     </div>
   );
 };

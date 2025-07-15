@@ -1,7 +1,11 @@
 import React, { useState } from 'react';
 import { ArrowLeft, QrCode, Edit, Calendar, MapPin, User, Package, DollarSign, Clock, CheckCircle, ArrowRightLeft, Wrench, Plus, Camera } from 'lucide-react';
 
-export const AssetDetailsPage: React.FC = () => {
+interface AssetDetailsPageProps {
+  onBack: () => void;
+}
+
+export const AssetDetailsPage: React.FC<AssetDetailsPageProps> = ({ onBack }) => {
   const [activeTab, setActiveTab] = useState('overview');
 
   const assetData = {
@@ -91,7 +95,10 @@ export const AssetDetailsPage: React.FC = () => {
     <div className="p-8">
       {/* Header */}
       <div className="flex items-center gap-4 mb-6">
-        <button className="p-2 hover:bg-gray-100 rounded-lg transition-colors">
+        <button 
+          onClick={onBack}
+          className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
+        >
           <ArrowLeft className="h-5 w-5 text-gray-600" />
         </button>
         <div className="flex-1">

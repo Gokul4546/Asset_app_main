@@ -13,13 +13,24 @@ import { TransferManagementPage } from './components/TransferManagementPage';
 
 function App() {
   const [currentPage, setCurrentPage] = useState('dashboard');
+  const [selectedAssetId, setSelectedAssetId] = useState<string | null>(null);
+
+  const handleAssetClick = (assetId: string) => {
+    setSelectedAssetId(assetId);
+    setCurrentPage('asset-details');
+  };
+
+  const handleBackToRegistry = () => {
+    setSelectedAssetId(null);
+    setCurrentPage('asset-registry');
+  };
 
   const renderPage = () => {
     switch (currentPage) {
       case 'dashboard':
         return <Dashboard />;
       case 'asset-registry':
-        return <AssetRegistryPage />;
+        return <AssetRegistryPage onAssetClick={handleAssetClick} />;
       case 'transfers':
         return (
           <TransferManagementPage />
@@ -31,7 +42,7 @@ function App() {
       case 'audit-scorecard':
         return <AuditScorecard />;
       case 'asset-details':
-        return <AssetDetailsPage />;
+        return <AssetDetailsPage onBack={handleBackToRegistry} />;
       case 'dealer-ledger':
         return (
           <div className="p-8">

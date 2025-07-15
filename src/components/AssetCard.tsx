@@ -9,12 +9,14 @@ interface AssetCardProps {
   asset: Asset;
   isSelected: boolean;
   onSelectionChange: (assetId: string) => void;
+  onAssetClick?: (assetId: string) => void;
 }
 
 export const AssetCard: React.FC<AssetCardProps> = ({
   asset,
   isSelected,
-  onSelectionChange
+  onSelectionChange,
+  onAssetClick
 }) => {
   const getTypeIcon = (type: Asset['type']) => {
     switch (type) {
@@ -42,13 +44,17 @@ export const AssetCard: React.FC<AssetCardProps> = ({
   };
 
   return (
-    <div className={`bg-white rounded-lg shadow-sm border border-gray-200 p-4 transition-all duration-200 hover:shadow-md ${isSelected ? 'ring-2 ring-purple-500' : ''}`}>
+    <div 
+      onClick={() => onAssetClick?.(asset.id)}
+      className={`bg-white rounded-lg shadow-sm border border-gray-200 p-4 transition-all duration-200 hover:shadow-md cursor-pointer ${isSelected ? 'ring-2 ring-purple-500' : ''}`}
+    >
       <div className="flex items-start justify-between mb-3">
         <div className="flex items-center gap-3">
           <input
             type="checkbox"
             checked={isSelected}
             onChange={() => onSelectionChange(asset.id)}
+            onClick={(e) => e.stopPropagation()}
             className="rounded border-gray-300 text-purple-600 focus:ring-purple-500"
           />
           <div className="flex items-center gap-2">

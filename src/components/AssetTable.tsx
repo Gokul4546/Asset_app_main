@@ -13,6 +13,7 @@ interface AssetTableProps {
   onSort: (column: string) => void;
   sortColumn: string;
   sortDirection: 'asc' | 'desc';
+  onAssetClick?: (assetId: string) => void;
 }
 
 export const AssetTable: React.FC<AssetTableProps> = ({
@@ -22,7 +23,8 @@ export const AssetTable: React.FC<AssetTableProps> = ({
   onSelectAll,
   onSort,
   sortColumn,
-  sortDirection
+  sortDirection,
+  onAssetClick
 }) => {
   const getTypeIcon = (type: Asset['type']) => {
     const iconProps = "h-4 w-4";
@@ -109,7 +111,8 @@ export const AssetTable: React.FC<AssetTableProps> = ({
             {assets.map((asset, index) => (
               <tr
                 key={asset.id}
-                className={`group hover:bg-gradient-to-r hover:from-indigo-50/30 hover:to-purple-50/20 transition-all duration-200 ${
+                onClick={() => onAssetClick?.(asset.id)}
+                className={`group hover:bg-gradient-to-r hover:from-indigo-50/30 hover:to-purple-50/20 transition-all duration-200 cursor-pointer ${
                   selectedAssets.has(asset.id) 
                     ? 'bg-gradient-to-r from-indigo-50/50 to-purple-50/30 ring-1 ring-indigo-200/50' 
                     : index % 2 === 0 ? 'bg-white' : 'bg-gray-50/30'
@@ -120,6 +123,7 @@ export const AssetTable: React.FC<AssetTableProps> = ({
                     type="checkbox"
                     checked={selectedAssets.has(asset.id)}
                     onChange={() => onSelectionChange(asset.id)}
+                    onClick={(e) => e.stopPropagation()}
                     className="rounded border-gray-300 text-indigo-600 focus:ring-indigo-500 focus:ring-offset-0 transition-colors"
                   />
                 </td>
