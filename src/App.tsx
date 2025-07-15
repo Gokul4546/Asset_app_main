@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Sidebar } from './components/Sidebar';
+import { Header } from './components/Header';
 import { Dashboard } from './components/Dashboard';
 import { AssetRegistryPage } from './components/AssetRegistryPage';
 import { AuditManagementPage } from './components/AuditManagementPage';
@@ -14,6 +15,21 @@ import { TransferManagementPage } from './components/TransferManagementPage';
 function App() {
   const [currentPage, setCurrentPage] = useState('dashboard');
   const [selectedAssetId, setSelectedAssetId] = useState<string | null>(null);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 1024);
+
+  useEffect(() => {
+    const handleResize = () => {
+      const mobile = window.innerWidth < 1024;
+      setIsMobile(mobile);
+      if (!mobile) {
+        setIsSidebarOpen(false);
+      }
+    };
+
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   const handleAssetClick = (assetId: string) => {
     setSelectedAssetId(assetId);
@@ -23,6 +39,10 @@ function App() {
   const handleBackToRegistry = () => {
     setSelectedAssetId(null);
     setCurrentPage('asset-registry');
+  };
+
+  const toggleSidebar = () => {
+    setIsSidebarOpen(!isSidebarOpen);
   };
 
   const renderPage = () => {
@@ -73,10 +93,32 @@ function App() {
         return <Dashboard />;
     }
   };
+
   return (
-    <div className="min-h-screen bg-gray-50 flex">
-      <Sidebar currentPage={currentPage} onPageChange={setCurrentPage} />
-      <div className="flex-1 overflow-hidden">
+    <div className="min-h-screen bg-gray-50 flex relative">
+      {/* Mobile Overlay */}
+      {isMobile && isSidebarOpen && (
+        <div 
+          className="fixed inset-0 bg-black bg-opacity-50 z-40 lg:hidden"
+          onClick={() => setIsSidebarOpen(false)}
+        />
+      )}
+      
+      {/* Sidebar */}
+      <Sidebar 
+        currentPage={currentPage} 
+        onPageChange={setCurrentPage}
+        isOpen={isSidebarOpen}
+        onClose={() => setIsSidebarOpen(false)}
+        isMobile={isMobile}
+      />
+      
+      {/* Main Content */}
+      <div className="flex-1 flex flex-col min-h-screen lg:ml-0">
+        <Header 
+          onToggleSidebar={toggleSidebar}
+          showHamburger={isMobile}
+        />
         {renderPage()}
       </div>
     </div>
