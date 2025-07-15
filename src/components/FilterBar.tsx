@@ -175,28 +175,3 @@ export const FilterBar: React.FC<FilterBarProps> = ({
     </div>
   );
 };
-          
-          <div className="flex items-center gap-3 ml-auto">
-            <button
-              onClick={onClearAll}
-              className="text-sm text-gray-600 hover:text-gray-900 transition-colors duration-200 font-medium"
-            >
-              Clear All
-            </button>
-            
-            <div className="w-px h-4 bg-gray-300"></div>
-            
-            <button
-              onClick={onSavedViews}
-              className="flex items-center gap-2 px-3 py-1.5 text-sm text-gray-700 bg-white/80 backdrop-blur-sm border border-gray-200 rounded-lg hover:bg-white hover:border-gray-300 transition-all duration-200 shadow-sm"
-            >
-              <BookmarkCheck className="h-4 w-4" />
-              <span>Saved Views</span>
-              <ChevronDown className="h-3 w-3" />
-            </button>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-};
