@@ -26,12 +26,6 @@ export const FilterBar: React.FC<FilterBarProps> = ({
               <button className="text-indigo-600 hover:text-indigo-700 font-medium">
                 Browse all assets
               </button>
-              <div className="flex items-center gap-2 text-sm text-gray-600 ml-4">
-                <div className="w-2 h-2 bg-green-400 rounded-full"></div>
-                <span>10 total assets</span>
-                <span className="text-gray-400">•</span>
-                <span className="text-amber-600">3 need attention</span>
-              </div>
             </div>
             
             <div className="flex items-center gap-2">
@@ -39,14 +33,6 @@ export const FilterBar: React.FC<FilterBarProps> = ({
                 <Sparkles className="h-3 w-3" />
                 <span>Smart Filters</span>
               </button>
-              <div className="flex items-center bg-gray-100 rounded-lg p-1 ml-2">
-                <button className="p-1.5 rounded-md transition-all duration-200 bg-white shadow-sm text-gray-700">
-                  <List className="h-4 w-4" />
-                </button>
-                <button className="p-1.5 rounded-md transition-all duration-200 text-gray-500 hover:text-gray-700">
-                  <LayoutGrid className="h-4 w-4" />
-                </button>
-              </div>
             </div>
           </div>
         </div>
@@ -60,16 +46,7 @@ export const FilterBar: React.FC<FilterBarProps> = ({
         <div className="flex flex-wrap items-center gap-4">
           <div className="flex items-center gap-2 text-sm text-gray-700">
             <Filter className="h-4 w-4 text-indigo-600" />
-            <span className="font-medium">No active filters</span>
-            <button className="text-indigo-600 hover:text-indigo-700 font-medium">
-              Browse all assets
-            </button>
-            <div className="flex items-center gap-2 text-sm text-gray-600 ml-4">
-              <div className="w-2 h-2 bg-green-400 rounded-full"></div>
-              <span>10 total assets</span>
-              <span className="text-gray-400">•</span>
-              <span className="text-amber-600">3 need attention</span>
-            </div>
+            <span className="font-medium">Active Filters:</span>
           </div>
           
           <div className="flex flex-wrap gap-2">

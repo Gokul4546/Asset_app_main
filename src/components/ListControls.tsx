@@ -23,7 +23,6 @@ interface ListControlsProps {
   onFilterChange: (filterType: string, values: string[]) => void;
   onImport: (format: string) => void;
   onExport: (format: string) => void;
-  onAddAsset: () => void;
 }
 
 export const ListControls: React.FC<ListControlsProps> = ({
@@ -38,8 +37,7 @@ export const ListControls: React.FC<ListControlsProps> = ({
   activeFilters,
   onFilterChange,
   onImport,
-  onExport,
-  onAddAsset
+  onExport
 }) => {
   const getFilteredCount = () => {
     let count = assets.length;
@@ -82,21 +80,27 @@ export const ListControls: React.FC<ListControlsProps> = ({
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-6">
             <div>
+              <h2 className="text-2xl font-bold text-gray-900 tracking-tight">Assets</h2>
+              <p className="text-sm text-gray-600 mt-0.5">Manage your organization's assets</p>
+            </div>
+            
+            <div className="flex items-center gap-2 text-sm text-gray-600">
+              <div className="w-2 h-2 bg-green-400 rounded-full"></div>
+              <span>{assets.length} total assets</span>
+              {getActiveFilterCount() > 0 && (
+                <>
+                  <span className="text-gray-400">•</span>
+                  <span className="text-indigo-600 font-medium">{getFilteredCount()} filtered</span>
+                </>
+              )}
               <span className="text-gray-400">•</span>
               <span className="text-amber-600">{getNeedsAttentionCount()} need attention</span>
             </div>
-          <button className="flex items-center gap-2 px-4 py-2.5 bg-gradient-to-r from-indigo-600 to-purple-600 text-white rounded-xl hover:from-indigo-700 hover:to-purple-700 transition-all duration-200 font-medium text-sm shadow-lg shadow-indigo-500/25 hover:shadow-indigo-500/40">
-            <Plus className="h-4 w-4" />
-            <span>Add Asset</span>
-          </button>
+          </div>
           
           <div className="flex items-center gap-3">
             <ViewToggle currentView={currentView} onViewChange={onViewChange} />
             
-          
-          <div className="w-px h-6 bg-gray-200"></div>
-          
-          <ViewToggle currentView={currentView} onViewChange={onViewChange} />
             <SortMenu 
               currentSort={currentSort}
               currentDirection={currentDirection}
@@ -120,5 +124,3 @@ export const ListControls: React.FC<ListControlsProps> = ({
     </div>
   );
 };
-  )
-}

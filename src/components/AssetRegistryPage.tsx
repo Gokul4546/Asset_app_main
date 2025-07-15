@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { Plus } from 'lucide-react';
 import { ListControls } from './ListControls';
 import { FilterBar } from './FilterBar';
 import { AssetTable } from './AssetTable';
@@ -8,11 +7,9 @@ import { AssetGrid } from './AssetGrid';
 import { BulkActions } from './BulkActions';
 import { Pagination } from './Pagination';
 import { useAssets } from '../hooks/useAssets';
-import { AddAssetModal } from './AddAssetModal';
 
 export const AssetRegistryPage: React.FC = () => {
   const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
-  const [isAddModalOpen, setIsAddModalOpen] = useState(false);
   const {
     assets,
     searchTerm,
@@ -60,14 +57,8 @@ export const AssetRegistryPage: React.FC = () => {
     // Implement saved views logic here
   };
 
-  const handleAddAsset = (assetData: any) => {
-    console.log('Adding new asset:', assetData);
-    // Here you would typically add the asset to your data store
-    // For now, we'll just log it
-  };
-
   return (
-    <div className="flex-1 overflow-hidden relative">
+    <div className="flex-1 overflow-hidden">
       <ListControls
         assets={assets}
         currentView={currentView}
@@ -81,7 +72,6 @@ export const AssetRegistryPage: React.FC = () => {
         onFilterChange={handleFilterChange}
         onImport={handleImport}
         onExport={handleExport}
-        onAddAsset={() => setIsAddModalOpen(true)}
       />
       
       <FilterBar
@@ -139,13 +129,6 @@ export const AssetRegistryPage: React.FC = () => {
           </div>
         )}
       </div>
-
-      {/* Add Asset Modal */}
-      <AddAssetModal
-        isOpen={isAddModalOpen}
-        onClose={() => setIsAddModalOpen(false)}
-        onSubmit={handleAddAsset}
-      />
     </div>
   );
 };
