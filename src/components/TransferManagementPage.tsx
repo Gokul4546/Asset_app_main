@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
 import { Plus, Calendar, Truck, CheckCircle, ArrowRightLeft, Eye, Edit, X, Download, ChevronLeft, ChevronRight } from 'lucide-react';
+import { NewTransferModal } from './NewTransferModal';
 
 export const TransferManagementPage: React.FC = () => {
   const [selectedStatus, setSelectedStatus] = useState('All Statuses');
   const [selectedLocation, setSelectedLocation] = useState('All Locations');
   const [dateRange, setDateRange] = useState('');
   const [transferId, setTransferId] = useState('');
+  const [isNewTransferModalOpen, setIsNewTransferModalOpen] = useState(false);
 
   const transferStats = [
     {
@@ -112,6 +114,12 @@ export const TransferManagementPage: React.FC = () => {
     return colors[index];
   };
 
+  const handleNewTransfer = (transferData: any) => {
+    console.log('New transfer created:', transferData);
+    // Here you would typically send the data to your backend
+    // and refresh the transfer list
+  };
+
   return (
     <div className="p-8">
       <div className="flex items-center justify-between mb-8">
@@ -119,7 +127,10 @@ export const TransferManagementPage: React.FC = () => {
           <h1 className="text-3xl font-bold text-gray-900 mb-2">Transfer Management</h1>
           <p className="text-gray-600">Manage asset transfers with approval workflows</p>
         </div>
-        <button className="flex items-center gap-2 px-4 py-2.5 bg-gradient-to-r from-indigo-600 to-purple-600 text-white rounded-xl hover:from-indigo-700 hover:to-purple-700 transition-all duration-200 font-medium text-sm shadow-lg">
+        <button 
+          onClick={() => setIsNewTransferModalOpen(true)}
+          className="flex items-center gap-2 px-4 py-2.5 bg-gradient-to-r from-indigo-600 to-purple-600 text-white rounded-xl hover:from-indigo-700 hover:to-purple-700 transition-all duration-200 font-medium text-sm shadow-lg"
+        >
           <Plus className="h-4 w-4" />
           New Transfer
         </button>
@@ -273,6 +284,12 @@ export const TransferManagementPage: React.FC = () => {
           </div>
         </div>
       </div>
+      
+      <NewTransferModal
+        isOpen={isNewTransferModalOpen}
+        onClose={() => setIsNewTransferModalOpen(false)}
+        onSubmit={handleNewTransfer}
+      />
     </div>
   );
 };
