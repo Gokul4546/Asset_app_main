@@ -46,9 +46,9 @@ export const StatusBadge: React.FC<StatusBadgeProps> = ({ status }) => {
   const Icon = config.icon;
 
   return (
-    <div className={`inline-flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-semibold border ring-1 ${config.className} transition-all duration-200`}>
+    <div className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium border ring-1 ${config.className} transition-all duration-200`}>
       <div className={`w-1.5 h-1.5 rounded-full ${config.dotColor}`}></div>
-      <Icon className="h-3 w-3" />
+      <Icon className="h-2.5 w-2.5" />
       <span>{status}</span>
     </div>
   );
