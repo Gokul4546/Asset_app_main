@@ -13,6 +13,19 @@ let deferredPrompt: BeforeInstallPromptEvent | null = null;
 
 // Register service worker
 export const registerSW = async (): Promise<void> => {
+  // Skip service worker registration in unsupported environments
+  if (!('serviceWorker' in navigator)) {
+    console.log('Service Worker not supported in this environment');
+    return;
+  }
+
+  // Check if PWA features should be enabled (defaults to true in production)
+  const enablePWA = import.meta.env.VITE_ENABLE_PWA !== 'false';
+  if (!enablePWA) {
+    console.log('PWA features disabled via environment variable');
+    return;
+  }
+
   if ('serviceWorker' in navigator) {
     try {
       const registration = await navigator.serviceWorker.register('/sw.js', {
@@ -42,7 +55,9 @@ export const registerSW = async (): Promise<void> => {
       });
 
     } catch (error) {
-      console.error('Service Worker registration failed:', error);
+      console.warn('Service Worker registration failed:', error);
+      // Don't throw error to prevent app from breaking in unsupported environments
+      return;
     }
   }
 };
