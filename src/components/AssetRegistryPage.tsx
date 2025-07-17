@@ -1,83 +1,83 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { ListControls } from './ListControls';
 import { FilterBar } from './FilterBar';
-import { AssetGrid } from './AssetGrid';
 import { AssetTable } from './AssetTable';
+import { AssetCard } from './AssetCard';
+import { AssetGrid } from './AssetGrid';
+import { BulkActions } from './BulkActions';
 import { Pagination } from './Pagination';
 import { useAssets } from '../hooks/useAssets';
+import { AddAssetModal } from './AddAssetModal';
 
 interface AssetRegistryPageProps {
   onAssetClick?: (assetId: string) => void;
 }
 
-export function AssetRegistryPage({ onAssetClick }: AssetRegistryPageProps) {
+export const AssetRegistryPage: React.FC<AssetRegistryPageProps> = ({ onAssetClick }) => {
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
+  const [isAddModalOpen, setIsAddModalOpen] = useState(false);
   const {
     assets,
-    loading,
-    filters,
-    currentView,
-    setCurrentView,
+    searchTerm,
+    setSearchTerm,
+    selectedAssets,
     sortColumn,
     sortDirection,
     sortCriteria,
-    handleSort,
-    handleMultiSort,
+    currentPage,
+    setCurrentPage,
+    filters,
     activeFilters,
-    handleFilterChange,
-    removeFilter,
-    clearAllFilters,
-    selectedAssets,
-    onSelectionChange,
+    currentView,
+    setCurrentView,
     paginatedAssets,
     totalPages,
-    currentPage,
-    setCurrentPage
+    handleSort,
+    handleMultiSort,
+    handleFilterChange,
+    handleSelectionChange,
+    handleSelectAll,
+    removeFilter,
+    clearAllFilters,
+    clearSelection,
+    handleImport,
+    handleExport
   } = useAssets();
 
-  const handleImport = () => {
-    // Import functionality
-    console.log('Import assets');
+  const handleAddAsset = (assetData: any) => {
+    console.log('Adding new asset:', assetData);
+    // Implement asset creation logic here
   };
 
-  const handleExport = () => {
-    // Export functionality
-    console.log('Export assets');
-  };
+  React.useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
 
-  const handleAddAsset = () => {
-    // Add asset functionality
-    console.log('Add new asset');
-  };
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
-  const handleSelectAll = (checked: boolean) => {
-    // Select all functionality
-    console.log('Select all:', checked);
+  const handleBulkAction = (actionId: string) => {
+    console.log(`Bulk action: ${actionId} on ${selectedAssets.size} assets`);
+    // Implement bulk action logic here
   };
 
   const handleSavedViews = () => {
-    // Saved views functionality
-    console.log('Saved views');
+    console.log('Show saved views');
+    // Implement saved views logic here
   };
 
-  if (loading) {
-    return (
-      <div className="p-4 md:p-8">
-        <div className="flex items-center justify-center h-64">
-          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
-        </div>
-      </div>
-    );
-  }
-
   return (
-    <div className="p-4 md:p-8">
-      <ListControls 
+    <div className="flex-1 overflow-hidden">
+      <ListControls
         assets={assets}
         onImport={handleImport}
         onExport={handleExport}
-        onAddAsset={handleAddAsset}
+        onAddAsset={() => setIsAddModalOpen(true)}
       />
-      <FilterBar 
+      
+      <FilterBar
         assets={assets}
         filters={filters}
         currentView={currentView}
@@ -94,31 +94,63 @@ export function AssetRegistryPage({ onAssetClick }: AssetRegistryPageProps) {
         onSavedViews={handleSavedViews}
       />
       
-      {currentView === 'grid' ? (
-        <AssetGrid 
-          assets={paginatedAssets}
-          selectedAssets={selectedAssets}
-          onSelectionChange={onSelectionChange}
-          onAssetClick={onAssetClick}
-        />
-      ) : (
-        <AssetTable 
-          assets={paginatedAssets}
-          selectedAssets={selectedAssets}
-          onSelectionChange={onSelectionChange}
-          onSelectAll={handleSelectAll}
-          onSort={handleSort}
-          sortColumn={sortColumn}
-          sortDirection={sortDirection}
-          onAssetClick={onAssetClick}
-        />
-      )}
+      <BulkActions
+        selectedCount={selectedAssets.size}
+        onAction={handleBulkAction}
+        onClearSelection={clearSelection}
+      />
       
-      <Pagination
-        currentPage={currentPage}
-        totalPages={totalPages}
-        onPageChange={setCurrentPage}
+      <div className="p-8">
+        {isMobile || currentView === 'grid' ? (
+          currentView === 'grid' ? (
+            <AssetGrid
+              assets={paginatedAssets}
+              selectedAssets={selectedAssets}
+              onSelectionChange={handleSelectionChange}
+              onAssetClick={onAssetClick}
+            />
+          ) : (
+          <div className="grid gap-4">
+            {paginatedAssets.map((asset) => (
+              <AssetCard
+                key={asset.id}
+                asset={asset}
+                isSelected={selectedAssets.has(asset.id)}
+                onSelectionChange={handleSelectionChange}
+                onAssetClick={onAssetClick}
+              />
+            ))}
+          </div>
+          )
+        ) : (
+          <AssetTable
+            assets={paginatedAssets}
+            selectedAssets={selectedAssets}
+            onSelectionChange={handleSelectionChange}
+            onSelectAll={handleSelectAll}
+            onSort={handleSort}
+            sortColumn={sortColumn}
+            sortDirection={sortDirection}
+            onAssetClick={onAssetClick}
+          />
+        )}
+        
+        {totalPages > 1 && (
+          <div className="mt-8">
+            <Pagination
+              currentPage={currentPage}
+              totalPages={totalPages}
+              onPageChange={setCurrentPage}
+            />
+          </div>
+        )}
+      </div>
+      
+      <AddAssetModal
+        isOpen={isAddModalOpen}
+        onClose={() => setIsAddModalOpen(false)}
+        onSubmit={handleAddAsset}
       />
     </div>
   );
-}
+};

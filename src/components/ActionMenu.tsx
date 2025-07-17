@@ -69,10 +69,7 @@ export const ActionMenu: React.FC<ActionMenuProps> = ({ asset }) => {
   return (
     <div className="relative" ref={menuRef}>
       <button
-        onClick={(e) => {
-          e.stopPropagation();
-          setIsOpen(!isOpen);
-        }}
+        onClick={() => setIsOpen(!isOpen)}
         className="p-2 rounded-lg hover:bg-gray-100 transition-all duration-200 group"
       >
         <MoreVertical className="h-4 w-4 text-gray-400 group-hover:text-gray-600" />
