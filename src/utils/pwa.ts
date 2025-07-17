@@ -13,6 +13,19 @@ let deferredPrompt: BeforeInstallPromptEvent | null = null;
 
 // Register service worker
 export const registerSW = async (): Promise<void> => {
+  // Check if we're in a supported environment
+  if (typeof window === 'undefined' || !('serviceWorker' in navigator)) {
+    console.log('Service Worker not supported in this environment');
+    return;
+  }
+
+  // Skip service worker registration in StackBlitz environment
+  if (window.location.hostname.includes('stackblitz') || 
+      window.location.hostname.includes('webcontainer')) {
+    console.log('Service Worker registration skipped in StackBlitz environment');
+    return;
+  }
+
   if ('serviceWorker' in navigator) {
     try {
       const registration = await navigator.serviceWorker.register('/sw.js', {
