@@ -111,7 +111,14 @@ export const AssetTable: React.FC<AssetTableProps> = ({
             {assets.map((asset, index) => (
               <tr
                 key={asset.id}
-                onClick={() => onAssetClick?.(asset.id)}
+                onClick={(e) => {
+                  // Prevent navigation if clicking on interactive elements
+                  const target = e.target as HTMLElement;
+                  if (target.type === 'checkbox' || target.closest('button') || target.closest('input')) {
+                    return;
+                  }
+                  onAssetClick?.(asset.id);
+                }}
                 className={`group hover:bg-gradient-to-r hover:from-indigo-50/30 hover:to-purple-50/20 transition-all duration-200 cursor-pointer ${
                   selectedAssets.has(asset.id) 
                     ? 'bg-gradient-to-r from-indigo-50/50 to-purple-50/30 ring-1 ring-indigo-200/50' 
