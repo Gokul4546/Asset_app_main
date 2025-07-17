@@ -81,7 +81,7 @@ export const ActionMenu: React.FC<ActionMenuProps> = ({ asset }) => {
       {isOpen && (
         <>
           <div className="fixed inset-0 z-40" onClick={() => setIsOpen(false)} />
-          <div className="absolute right-0 top-10 w-64 bg-white rounded-xl shadow-xl border border-gray-200/60 py-2 z-50 backdrop-blur-sm">
+          <div className="absolute right-0 top-12 w-64 bg-white rounded-xl shadow-xl border border-gray-200/60 py-2 z-50 backdrop-blur-sm">
             <div className="px-4 py-2 border-b border-gray-100">
               <p className="text-xs font-semibold text-gray-900">{asset.name}</p>
               <p className="text-xs text-gray-500">{asset.id}</p>
