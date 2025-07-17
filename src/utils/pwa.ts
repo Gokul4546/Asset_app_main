@@ -19,13 +19,6 @@ export const registerSW = async (): Promise<void> => {
     return;
   }
 
-  // Check if PWA features should be enabled (defaults to true in production)
-  const enablePWA = import.meta.env.VITE_ENABLE_PWA !== 'false';
-  if (!enablePWA) {
-    console.log('PWA features disabled via environment variable');
-    return;
-  }
-
   if ('serviceWorker' in navigator) {
     try {
       const registration = await navigator.serviceWorker.register('/sw.js', {
