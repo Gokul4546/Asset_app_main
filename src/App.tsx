@@ -11,7 +11,6 @@ import { MaintenancePage } from './components/MaintenancePage';
 import { UserRoleManagementPage } from './components/UserRoleManagementPage';
 import { NotificationsPage } from './components/NotificationsPage';
 import { TransferManagementPage } from './components/TransferManagementPage';
-import { PWAPrompt } from './components/PWAPrompt';
 
 function App() {
   const [currentPage, setCurrentPage] = useState('dashboard');
@@ -121,7 +120,6 @@ function App() {
           showHamburger={isMobile}
         />
         {renderPage()}
-        <PWAPrompt />
       </div>
     </div>
   );

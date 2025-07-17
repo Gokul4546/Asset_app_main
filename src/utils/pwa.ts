@@ -13,12 +13,6 @@ let deferredPrompt: BeforeInstallPromptEvent | null = null;
 
 // Register service worker
 export const registerSW = async (): Promise<void> => {
-  // Skip service worker registration in unsupported environments
-  if (!('serviceWorker' in navigator)) {
-    console.log('Service Worker not supported in this environment');
-    return;
-  }
-
   if ('serviceWorker' in navigator) {
     try {
       const registration = await navigator.serviceWorker.register('/sw.js', {
@@ -48,9 +42,7 @@ export const registerSW = async (): Promise<void> => {
       });
 
     } catch (error) {
-      console.warn('Service Worker registration failed:', error);
-      // Don't throw error to prevent app from breaking in unsupported environments
-      return;
+      console.error('Service Worker registration failed:', error);
     }
   }
 };
