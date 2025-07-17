@@ -21,15 +21,15 @@ export const AssetCard: React.FC<AssetCardProps> = ({
   const getTypeIcon = (type: Asset['type']) => {
     switch (type) {
       case 'Hardware':
-        return <Laptop className="h-4 w-4 text-blue-600" />;
+        return <Laptop className="h-5 w-5 text-blue-600" />;
       case 'Software':
-        return <Smartphone className="h-4 w-4 text-green-600" />;
+        return <Smartphone className="h-5 w-5 text-green-600" />;
       case 'Vehicle':
-        return <Car className="h-4 w-4 text-red-600" />;
+        return <Car className="h-5 w-5 text-red-600" />;
       case 'Equipment':
-        return <Cog className="h-4 w-4 text-purple-600" />;
+        return <Cog className="h-5 w-5 text-purple-600" />;
       default:
-        return <Laptop className="h-4 w-4 text-gray-600" />;
+        return <Laptop className="h-5 w-5 text-gray-600" />;
     }
   };
 
@@ -53,80 +53,77 @@ export const AssetCard: React.FC<AssetCardProps> = ({
         }
         onAssetClick?.(asset.id);
       }}
-      className={`bg-white rounded-xl shadow-sm border border-gray-200 p-5 transition-all duration-200 hover:shadow-md cursor-pointer relative ${isSelected ? 'ring-2 ring-purple-500' : ''}`}
+      className={`bg-white rounded-lg shadow-sm border border-gray-200 p-4 transition-all duration-200 hover:shadow-md cursor-pointer relative ${isSelected ? 'ring-2 ring-purple-500' : ''}`}
     >
-      {/* Action Menu - Top Right */}
-      <div className="absolute top-4 right-4">
-        <ActionMenu asset={asset} />
-      </div>
-
-      {/* Header Section */}
-      <div className="flex items-center gap-3 mb-4 pr-8">
-        <input
-          type="checkbox"
-          checked={isSelected}
-          onChange={() => onSelectionChange(asset.id)}
-          onClick={(e) => e.stopPropagation()}
-          className="rounded border-gray-300 text-purple-600 focus:ring-purple-500 flex-shrink-0"
-        />
-        <div className="flex items-center gap-2 min-w-0 flex-1">
-          {getTypeIcon(asset.type)}
-          <h3 className="font-semibold text-gray-900 truncate text-base">{asset.name}</h3>
+      {/* Top Section: Checkbox, Icon, Name and Action Menu */}
+      <div className="flex items-start justify-between mb-3">
+        <div className="flex items-center gap-3 flex-1 min-w-0">
+          <input
+            type="checkbox"
+            checked={isSelected}
+            onChange={() => onSelectionChange(asset.id)}
+            onClick={(e) => e.stopPropagation()}
+            className="rounded border-gray-300 text-purple-600 focus:ring-purple-500 flex-shrink-0"
+          />
+          <div className="flex items-center gap-2 min-w-0 flex-1">
+            {getTypeIcon(asset.type)}
+            <h3 className="font-medium text-gray-900 truncate">{asset.name}</h3>
+          </div>
+        </div>
+        
+        {/* Action Menu in top right */}
+        <div className="flex-shrink-0 ml-2">
+          <ActionMenu asset={asset} />
         </div>
       </div>
       
-      {/* Main Content Grid - 3 Columns */}
-      <div className="grid grid-cols-1 sm:grid-cols-3 gap-x-6 gap-y-3 mb-4">
-        {/* Column 1 */}
+      {/* Main Content: Two Column Layout */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-2">
+        {/* Left Column */}
         <div className="space-y-2">
-          <div className="flex flex-col">
-            <span className="text-xs text-gray-500 font-medium">Asset ID</span>
-            <span className="text-sm font-mono text-gray-900 mt-0.5">{asset.id}</span>
+          <div className="flex justify-between items-center">
+            <span className="text-xs text-gray-500">Asset ID:</span>
+            <span className="text-xs font-medium text-gray-900 font-mono">{asset.id}</span>
           </div>
           
-          <div className="flex flex-col">
-            <span className="text-xs text-gray-500 font-medium">Type</span>
-            <span className="text-sm text-gray-900 mt-0.5">{asset.type}</span>
+          <div className="flex justify-between items-center">
+            <span className="text-xs text-gray-500">Type:</span>
+            <span className="text-xs text-gray-900">{asset.type}</span>
+          </div>
+          
+          <div className="flex justify-between items-center">
+            <span className="text-xs text-gray-500">Status:</span>
+            <StatusBadge status={asset.status} />
           </div>
         </div>
         
-        {/* Column 2 */}
+        {/* Right Column */}
         <div className="space-y-2">
-          <div className="flex flex-col">
-            <span className="text-xs text-gray-500 font-medium">Status</span>
-            <div className="mt-0.5">
-              <StatusBadge status={asset.status} />
-            </div>
+          <div className="flex justify-between items-center">
+            <span className="text-xs text-gray-500">Location:</span>
+            <span className="text-xs text-gray-900 text-right truncate ml-2">{asset.location}</span>
           </div>
           
-          <div className="flex flex-col">
-            <span className="text-xs text-gray-500 font-medium">Location</span>
-            <span className="text-sm text-gray-900 mt-0.5 truncate">{asset.location}</span>
-          </div>
-        </div>
-        
-        {/* Column 3 */}
-        <div className="space-y-2">
-          <div className="flex flex-col">
-            <span className="text-xs text-gray-500 font-medium">Last Verified</span>
-            <span className="text-sm text-gray-900 mt-0.5">{formatDate(asset.lastVerified)}</span>
+          <div className="flex justify-between items-center">
+            <span className="text-xs text-gray-500">Verified:</span>
+            <span className="text-xs text-gray-900 text-right">{formatDate(asset.lastVerified)}</span>
           </div>
           
-          <div className="flex flex-col">
-            <span className="text-xs text-gray-500 font-medium">Owner</span>
-            <span className="text-sm text-gray-900 mt-0.5 truncate">{asset.assignedUser.name}</span>
+          <div className="flex justify-between items-center">
+            <span className="text-xs text-gray-500">Owner:</span>
+            <span className="text-xs text-gray-900 text-right truncate ml-2">{asset.assignedUser.name}</span>
           </div>
         </div>
       </div>
       
-      {/* Footer Section - User Avatar */}
-      <div className="pt-3 border-t border-gray-100">
-        <div className="flex items-center gap-3">
-          <div className="w-7 h-7 bg-gradient-to-br from-purple-500 to-pink-500 rounded-lg flex items-center justify-center text-white text-xs font-semibold flex-shrink-0">
+      {/* Bottom Section: User Avatar (Compact) */}
+      <div className="mt-3 pt-3 border-t border-gray-100">
+        <div className="flex items-center gap-2">
+          <div className="w-6 h-6 bg-gradient-to-br from-purple-500 to-pink-500 rounded-full flex items-center justify-center text-white text-xs font-semibold flex-shrink-0">
             {asset.assignedUser.initials}
           </div>
           <div className="min-w-0 flex-1">
-            <span className="text-sm text-gray-700 font-medium truncate block">{asset.assignedUser.name}</span>
+            <span className="text-xs text-gray-700 font-medium truncate block">{asset.assignedUser.name}</span>
             <span className="text-xs text-gray-500">Asset Owner</span>
           </div>
         </div>
