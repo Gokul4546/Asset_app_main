@@ -68,7 +68,7 @@ export const ImportExportMenu: React.FC<ImportExportMenuProps> = ({
         {isImportOpen && (
           <>
             <div className="fixed inset-0 z-40" onClick={() => setIsImportOpen(false)} />
-            <div className="absolute right-0 top-12 w-64 bg-white rounded-xl shadow-xl border border-gray-200/60 py-2 z-50">
+            <div className="absolute right-0 bottom-full mb-2 w-64 bg-white rounded-xl shadow-xl border border-gray-200/60 py-2 z-50">
               <div className="px-4 py-2 border-b border-gray-100">
                 <p className="text-xs font-semibold text-gray-900 uppercase tracking-wide">Import Assets</p>
               </div>
@@ -108,7 +108,7 @@ export const ImportExportMenu: React.FC<ImportExportMenuProps> = ({
         {isExportOpen && (
           <>
             <div className="fixed inset-0 z-40" onClick={() => setIsExportOpen(false)} />
-            <div className="absolute right-0 top-12 w-64 bg-white rounded-xl shadow-xl border border-gray-200/60 py-2 z-50">
+            <div className="absolute right-0 bottom-full mb-2 w-64 bg-white rounded-xl shadow-xl border border-gray-200/60 py-2 z-50">
               <div className="px-4 py-2 border-b border-gray-100">
                 <p className="text-xs font-semibold text-gray-900 uppercase tracking-wide">Export Assets</p>
               </div>

@@ -119,7 +119,7 @@ export const FilterMenu: React.FC<FilterMenuProps> = ({
       {isOpen && (
         <>
           <div className="fixed inset-0 z-40" onClick={() => setIsOpen(false)} />
-          <div className="absolute right-0 top-12 w-96 bg-white rounded-xl shadow-xl border border-gray-200/60 z-50">
+          <div className="absolute right-0 bottom-full mb-2 w-96 bg-white rounded-xl shadow-xl border border-gray-200/60 z-50">
             {/* Header */}
             <div className="px-4 py-3 border-b border-gray-200">
               <div className="flex items-center justify-between">
