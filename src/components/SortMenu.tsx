@@ -112,10 +112,10 @@ export const SortMenu: React.FC<SortMenuProps> = ({
     <div className="relative" ref={menuRef}>
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="flex items-center gap-2 px-3 py-2 text-gray-700 bg-white border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors text-sm relative"
+        className="flex items-center gap-2 px-2 py-1.5 md:px-3 md:py-2 text-gray-700 bg-white border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors text-xs md:text-sm relative"
       >
         <ArrowUpDown className="h-4 w-4" />
-        <span>Sort by {getCurrentSortLabel()}</span>
+        <span><span className="hidden sm:inline">Sort by </span>{getCurrentSortLabel()}</span>
         {sortCriteria.length > 1 && (
           <span className="absolute -top-1 -right-1 w-5 h-5 bg-indigo-600 text-white text-xs rounded-full flex items-center justify-center">
             {sortCriteria.length}
@@ -127,7 +127,7 @@ export const SortMenu: React.FC<SortMenuProps> = ({
       {isOpen && (
         <>
           <div className="fixed inset-0 z-40" onClick={() => setIsOpen(false)} />
-          <div className="absolute right-0 top-12 w-80 bg-white rounded-xl shadow-xl border border-gray-200/60 py-2 z-50">
+          <div className="absolute right-0 top-12 w-72 md:w-80 bg-white rounded-xl shadow-xl border border-gray-200/60 py-2 z-50">
             <div className="px-4 py-2 border-b border-gray-100">
               <div className="flex items-center justify-between">
                 <p className="text-xs font-semibold text-gray-900 uppercase tracking-wide">Sort Options</p>
@@ -156,7 +156,7 @@ export const SortMenu: React.FC<SortMenuProps> = ({
             {/* Quick Single Sort */}
             <div className="px-4 py-2 border-b border-gray-100">
               <p className="text-xs font-medium text-gray-600 mb-2">Quick Sort</p>
-              <div className="grid grid-cols-2 gap-1">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-1">
                 {sortOptions.slice(0, 4).map((option) => (
                   <div key={option.key} className="flex gap-1">
                     <button
@@ -164,7 +164,7 @@ export const SortMenu: React.FC<SortMenuProps> = ({
                       className={`flex-1 text-xs px-2 py-1 rounded transition-colors ${
                         currentSort === option.key && currentDirection === 'asc'
                           ? 'bg-indigo-100 text-indigo-700'
-                          : 'text-gray-600 hover:bg-gray-100'
+                          : 'text-gray-600 hover:bg-gray-100 border border-gray-100'
                       }`}
                     >
                       {option.label} ↑
@@ -174,7 +174,7 @@ export const SortMenu: React.FC<SortMenuProps> = ({
                       className={`flex-1 text-xs px-2 py-1 rounded transition-colors ${
                         currentSort === option.key && currentDirection === 'desc'
                           ? 'bg-indigo-100 text-indigo-700'
-                          : 'text-gray-600 hover:bg-gray-100'
+                          : 'text-gray-600 hover:bg-gray-100 border border-gray-100'
                       }`}
                     >
                       {option.label} ↓
@@ -189,12 +189,12 @@ export const SortMenu: React.FC<SortMenuProps> = ({
               <p className="text-xs font-medium text-gray-600 mb-2">Multi-Column Sort</p>
               <div className="space-y-2 max-h-48 overflow-y-auto">
                 {localCriteria.map((criteria, index) => (
-                  <div key={index} className="flex items-center gap-2 p-2 bg-gray-50 rounded-lg">
+                  <div key={index} className="flex items-center gap-2 p-2 bg-gray-50 rounded-lg border border-gray-100">
                     <span className="text-xs text-gray-500 w-4">{index + 1}.</span>
                     <select
                       value={criteria.column}
                       onChange={(e) => updateSortCriteria(index, 'column', e.target.value)}
-                      className="flex-1 text-xs border border-gray-200 rounded px-2 py-1 focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500"
+                      className="flex-1 text-xs border border-gray-200 rounded px-2 py-1 focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500 bg-white"
                     >
                       {getAvailableColumns(index).map(option => (
                         <option key={option.key} value={option.key}>
@@ -205,7 +205,7 @@ export const SortMenu: React.FC<SortMenuProps> = ({
                     <select
                       value={criteria.direction}
                       onChange={(e) => updateSortCriteria(index, 'direction', e.target.value)}
-                      className="text-xs border border-gray-200 rounded px-2 py-1 focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500"
+                      className="text-xs border border-gray-200 rounded px-2 py-1 focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500 bg-white"
                     >
                       <option value="asc">↑ Asc</option>
                       <option value="desc">↓ Desc</option>
