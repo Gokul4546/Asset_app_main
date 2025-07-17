@@ -45,11 +45,18 @@ export const AssetCard: React.FC<AssetCardProps> = ({
 
   return (
     <div 
-      onClick={() => onAssetClick?.(asset.id)}
+      onClick={(e) => {
+        // Prevent navigation if clicking on interactive elements
+        const target = e.target as HTMLElement;
+        if (target.tagName === 'INPUT' || target.tagName === 'BUTTON' || target.closest('button')) {
+          return;
+        }
+        onAssetClick?.(asset.id);
+      }}
       className={`bg-white rounded-lg shadow-sm border border-gray-200 p-4 transition-all duration-200 hover:shadow-md cursor-pointer ${isSelected ? 'ring-2 ring-purple-500' : ''}`}
     >
-      <div className="flex items-start justify-between mb-3">
-        <div className="flex items-center gap-3">
+      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 sm:gap-0 mb-3">
+        <div className="flex items-center gap-2 sm:gap-3">
           <input
             type="checkbox"
             checked={isSelected}
@@ -57,7 +64,7 @@ export const AssetCard: React.FC<AssetCardProps> = ({
             onClick={(e) => e.stopPropagation()}
             className="rounded border-gray-300 text-purple-600 focus:ring-purple-500"
           />
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-1.5 sm:gap-2">
             {getTypeIcon(asset.type)}
             <h3 className="font-medium text-gray-900">{asset.name}</h3>
           </div>
@@ -67,27 +74,27 @@ export const AssetCard: React.FC<AssetCardProps> = ({
       </div>
       
       <div className="space-y-2">
-        <div className="flex items-center justify-between">
+        <div className="flex flex-col items-start sm:flex-row sm:items-center sm:justify-between gap-1 sm:gap-0">
           <span className="text-sm text-gray-600">Asset ID:</span>
           <span className="text-sm font-medium text-gray-900">{asset.id}</span>
         </div>
         
-        <div className="flex items-center justify-between">
+        <div className="flex flex-col items-start sm:flex-row sm:items-center sm:justify-between gap-1 sm:gap-0">
           <span className="text-sm text-gray-600">Type:</span>
           <span className="text-sm text-gray-900">{asset.type}</span>
         </div>
         
-        <div className="flex items-center justify-between">
+        <div className="flex flex-col items-start sm:flex-row sm:items-center sm:justify-between gap-1 sm:gap-0">
           <span className="text-sm text-gray-600">Status:</span>
           <StatusBadge status={asset.status} />
         </div>
         
-        <div className="flex items-center justify-between">
+        <div className="flex flex-col items-start sm:flex-row sm:items-center sm:justify-between gap-1 sm:gap-0">
           <span className="text-sm text-gray-600">Location:</span>
           <span className="text-sm text-gray-900">{asset.location}</span>
         </div>
         
-        <div className="flex items-center justify-between">
+        <div className="flex flex-col items-start sm:flex-row sm:items-center sm:justify-between gap-1 sm:gap-0">
           <span className="text-sm text-gray-600">Last Verified:</span>
           <span className="text-sm text-gray-900">{formatDate(asset.lastVerified)}</span>
         </div>

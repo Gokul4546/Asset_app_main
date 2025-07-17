@@ -69,7 +69,7 @@ export const AssetRegistryPage: React.FC<AssetRegistryPageProps> = ({ onAssetCli
   };
 
   return (
-    <div className="flex-1 overflow-hidden">
+    <div className="flex-1 overflow-hidden overflow-x-hidden">
       <ListControls
         assets={assets}
         onImport={handleImport}
@@ -100,7 +100,7 @@ export const AssetRegistryPage: React.FC<AssetRegistryPageProps> = ({ onAssetCli
         onClearSelection={clearSelection}
       />
       
-      <div className="p-8">
+      <div className="p-4 sm:p-6 lg:p-8">
         {isMobile || currentView === 'grid' ? (
           currentView === 'grid' ? (
             <AssetGrid

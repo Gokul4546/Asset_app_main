@@ -104,10 +104,10 @@ export const FilterMenu: React.FC<FilterMenuProps> = ({
     <div className="relative" ref={menuRef}>
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="flex items-center gap-2 px-3 py-2 text-gray-700 bg-white border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors text-sm relative"
+        className="flex items-center gap-1.5 px-2.5 py-1.5 sm:px-3 sm:py-2 text-gray-700 bg-white border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors text-xs sm:text-sm relative whitespace-nowrap"
       >
         <Filter className="h-4 w-4" />
-        <span>Filter</span>
+        <span className="hidden sm:inline">Filter</span>
         {getActiveFilterCount() > 0 && (
           <span className="absolute -top-1 -right-1 w-5 h-5 bg-indigo-600 text-white text-xs rounded-full flex items-center justify-center">
             {getActiveFilterCount()}
@@ -119,7 +119,7 @@ export const FilterMenu: React.FC<FilterMenuProps> = ({
       {isOpen && (
         <>
           <div className="fixed inset-0 z-40" onClick={() => setIsOpen(false)} />
-          <div className="absolute right-0 top-12 w-96 bg-white rounded-xl shadow-xl border border-gray-200/60 z-50">
+          <div className="absolute right-0 top-10 sm:top-12 w-80 sm:w-96 bg-white rounded-xl shadow-xl border border-gray-200/60 z-50">
             {/* Header */}
             <div className="px-4 py-3 border-b border-gray-200">
               <div className="flex items-center justify-between">
@@ -141,7 +141,7 @@ export const FilterMenu: React.FC<FilterMenuProps> = ({
             {!showAdvanced && (
               <div className="px-4 py-3 border-b border-gray-100">
                 <p className="text-xs font-medium text-gray-600 mb-2">Quick Filters</p>
-                <div className="grid grid-cols-2 gap-2">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
                   <button
                     onClick={() => applyQuickFilter('status', 'Active')}
                     className="text-xs px-3 py-2 bg-green-50 text-green-700 rounded-lg hover:bg-green-100 transition-colors"

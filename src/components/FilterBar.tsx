@@ -80,26 +80,26 @@ export const FilterBar: React.FC<FilterBarProps> = ({
   };
 
   return (
-    <div className="bg-gradient-to-r from-gray-50 to-gray-50/50 border-b border-gray-200/60 sticky top-20 z-30">
-      <div className="px-6 py-4">
+    <div className="bg-gradient-to-r from-gray-50 to-gray-50/50 border-b border-gray-200/60 sticky top-16 sm:top-20 z-30">
+      <div className="px-4 py-3 sm:px-6 sm:py-4">
         {/* Top row with controls and counts */}
-        <div className="flex items-center justify-between mb-3">
-          <div className="flex items-center gap-6">
-            <div className="flex items-center gap-3 text-sm text-gray-600">
+        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 sm:gap-0 mb-3">
+          <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
+            <div className="flex items-center gap-2 sm:gap-3 text-xs sm:text-sm text-gray-600">
               <div className="w-2 h-2 bg-green-400 rounded-full"></div>
               <span>{assets.length} total assets</span>
               {getActiveFilterCount() > 0 && (
                 <>
-                  <span className="text-gray-400">•</span>
+                  <span className="hidden sm:inline text-gray-400">•</span>
                   <span className="text-indigo-600 font-medium">{getFilteredCount()} filtered</span>
                 </>
               )}
-              <span className="text-gray-400">•</span>
+              <span className="hidden sm:inline text-gray-400">•</span>
               <span className="text-amber-600">{getNeedsAttentionCount()} need attention</span>
             </div>
           </div>
           
-          <div className="flex items-center gap-3">
+          <div className="flex flex-wrap items-center justify-end gap-2 sm:gap-3 w-full sm:w-auto">
             <ViewToggle currentView={currentView} onViewChange={onViewChange} />
             
             <SortMenu 
@@ -116,7 +116,7 @@ export const FilterBar: React.FC<FilterBarProps> = ({
               onFilterChange={onFilterChange}
             />
             
-            <button className="flex items-center gap-2 px-3 py-1.5 text-xs text-indigo-600 bg-indigo-50 rounded-full hover:bg-indigo-100 transition-colors">
+            <button className="flex items-center gap-1.5 px-2.5 py-1.5 text-xs text-indigo-600 bg-indigo-50 rounded-full hover:bg-indigo-100 transition-colors whitespace-nowrap">
               <Sparkles className="h-3 w-3" />
               <span>Smart Filters</span>
             </button>
@@ -125,20 +125,20 @@ export const FilterBar: React.FC<FilterBarProps> = ({
         
         {/* Active filters section - only show when filters are active */}
         {filters.length > 0 && (
-          <div className="flex flex-wrap items-center gap-4 pt-3 border-t border-gray-200">
-            <div className="flex items-center gap-2 text-sm text-gray-700">
+          <div className="flex flex-wrap items-center gap-x-3 gap-y-2 pt-3 border-t border-gray-200">
+            <div className="flex items-center gap-2 text-xs sm:text-sm text-gray-700">
               <Filter className="h-4 w-4 text-indigo-600" />
               <span className="font-medium">Active Filters:</span>
             </div>
             
-            <div className="flex flex-wrap gap-2">
+            <div className="flex flex-wrap gap-1.5 sm:gap-2">
               {filters.map((filter) => (
                 <div
                   key={filter.id}
-                  className="group flex items-center gap-2 px-3 py-1.5 bg-white/80 backdrop-blur-sm border border-indigo-200/60 rounded-full text-sm font-medium text-gray-700 hover:bg-white hover:border-indigo-300 transition-all duration-200 shadow-sm"
+                  className="group flex items-center gap-1.5 px-2.5 py-1 sm:px-3 sm:py-1.5 bg-white/80 backdrop-blur-sm border border-indigo-200/60 rounded-full text-xs sm:text-sm font-medium text-gray-700 hover:bg-white hover:border-indigo-300 transition-all duration-200 shadow-sm"
                 >
                   <span className="text-xs">{filter.icon}</span>
-                  <span className="text-gray-600">{filter.label}:</span>
+                  <span className="hidden sm:inline text-gray-600">{filter.label}:</span>
                   <span className="text-gray-900 font-semibold">{filter.value}</span>
                   <button
                     onClick={() => onRemoveFilter(filter.id)}
@@ -150,10 +150,10 @@ export const FilterBar: React.FC<FilterBarProps> = ({
               ))}
             </div>
             
-            <div className="flex items-center gap-3 ml-auto">
+            <div className="flex items-center gap-2 sm:gap-3 ml-auto">
               <button
                 onClick={onClearAll}
-                className="text-sm text-gray-600 hover:text-gray-900 transition-colors duration-200 font-medium"
+                className="text-xs sm:text-sm text-gray-600 hover:text-gray-900 transition-colors duration-200 font-medium"
               >
                 Clear All
               </button>
@@ -162,10 +162,10 @@ export const FilterBar: React.FC<FilterBarProps> = ({
               
               <button
                 onClick={onSavedViews}
-                className="flex items-center gap-2 px-3 py-1.5 text-sm text-gray-700 bg-white/80 backdrop-blur-sm border border-gray-200 rounded-lg hover:bg-white hover:border-gray-300 transition-all duration-200 shadow-sm"
+                className="flex items-center gap-1.5 px-2.5 py-1.5 text-xs sm:text-sm text-gray-700 bg-white/80 backdrop-blur-sm border border-gray-200 rounded-lg hover:bg-white hover:border-gray-300 transition-all duration-200 shadow-sm whitespace-nowrap"
               >
                 <BookmarkCheck className="h-4 w-4" />
-                <span>Saved Views</span>
+                <span className="hidden sm:inline">Saved Views</span>
                 <ChevronDown className="h-3 w-3" />
               </button>
             </div>

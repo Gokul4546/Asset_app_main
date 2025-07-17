@@ -58,17 +58,17 @@ export const ImportExportMenu: React.FC<ImportExportMenuProps> = ({
       <div className="relative" ref={importRef}>
         <button
           onClick={() => setIsImportOpen(!isImportOpen)}
-          className="flex items-center gap-2 px-3 py-2 text-gray-700 bg-white border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors text-sm"
+          className="flex items-center gap-1.5 px-2 py-1.5 sm:px-3 sm:py-2 text-gray-700 bg-white border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors text-xs sm:text-sm whitespace-nowrap"
         >
           <Upload className="h-4 w-4" />
-          <span>Import</span>
+          <span className="hidden xs:inline">Import</span>
           <ChevronDown className="h-3 w-3" />
         </button>
 
         {isImportOpen && (
           <>
             <div className="fixed inset-0 z-40" onClick={() => setIsImportOpen(false)} />
-            <div className="absolute right-0 top-12 w-64 bg-white rounded-xl shadow-xl border border-gray-200/60 py-2 z-50">
+            <div className="absolute right-0 top-10 sm:top-12 w-56 sm:w-64 bg-white rounded-xl shadow-xl border border-gray-200/60 py-2 z-50">
               <div className="px-4 py-2 border-b border-gray-100">
                 <p className="text-xs font-semibold text-gray-900 uppercase tracking-wide">Import Assets</p>
               </div>
@@ -98,17 +98,17 @@ export const ImportExportMenu: React.FC<ImportExportMenuProps> = ({
       <div className="relative" ref={exportRef}>
         <button
           onClick={() => setIsExportOpen(!isExportOpen)}
-          className="flex items-center gap-2 px-3 py-2 text-gray-700 bg-white border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors text-sm"
+          className="flex items-center gap-1.5 px-2 py-1.5 sm:px-3 sm:py-2 text-gray-700 bg-white border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors text-xs sm:text-sm whitespace-nowrap"
         >
           <Download className="h-4 w-4" />
-          <span>Export</span>
+          <span className="hidden xs:inline">Export</span>
           <ChevronDown className="h-3 w-3" />
         </button>
 
         {isExportOpen && (
           <>
             <div className="fixed inset-0 z-40" onClick={() => setIsExportOpen(false)} />
-            <div className="absolute right-0 top-12 w-64 bg-white rounded-xl shadow-xl border border-gray-200/60 py-2 z-50">
+            <div className="absolute right-0 top-10 sm:top-12 w-56 sm:w-64 bg-white rounded-xl shadow-xl border border-gray-200/60 py-2 z-50">
               <div className="px-4 py-2 border-b border-gray-100">
                 <p className="text-xs font-semibold text-gray-900 uppercase tracking-wide">Export Assets</p>
               </div>
