@@ -104,10 +104,10 @@ export const FilterMenu: React.FC<FilterMenuProps> = ({
     <div className="relative" ref={menuRef}>
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="flex items-center gap-1.5 px-2.5 py-1.5 sm:px-3 sm:py-2 text-gray-700 bg-white border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors text-xs sm:text-sm relative whitespace-nowrap"
+        className="flex items-center gap-1 px-2 py-1.5 sm:px-3 sm:py-2 text-gray-700 bg-white border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors text-xs relative whitespace-nowrap"
       >
         <Filter className="h-4 w-4" />
-        <span className="hidden sm:inline">Filter</span>
+        <span className="hidden xs:inline">Filter</span>
         {getActiveFilterCount() > 0 && (
           <span className="absolute -top-1 -right-1 w-5 h-5 bg-indigo-600 text-white text-xs rounded-full flex items-center justify-center">
             {getActiveFilterCount()}
@@ -119,7 +119,7 @@ export const FilterMenu: React.FC<FilterMenuProps> = ({
       {isOpen && (
         <>
           <div className="fixed inset-0 z-40" onClick={() => setIsOpen(false)} />
-          <div className="absolute right-0 top-10 sm:top-12 w-80 sm:w-96 bg-white rounded-xl shadow-xl border border-gray-200/60 z-50">
+          <div className="absolute right-0 top-10 w-72 sm:w-96 bg-white rounded-xl shadow-xl border border-gray-200/60 z-50">
             {/* Header */}
             <div className="px-4 py-3 border-b border-gray-200">
               <div className="flex items-center justify-between">

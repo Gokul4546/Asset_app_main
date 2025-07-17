@@ -100,7 +100,9 @@ export const FilterBar: React.FC<FilterBarProps> = ({
           </div>
           
           <div className="flex flex-wrap items-center justify-end gap-2 sm:gap-3 w-full sm:w-auto">
-            <ViewToggle currentView={currentView} onViewChange={onViewChange} />
+            <div className="hidden sm:block">
+              <ViewToggle currentView={currentView} onViewChange={onViewChange} />
+            </div>
             
             <SortMenu 
               currentSort={currentSort}
@@ -116,10 +118,12 @@ export const FilterBar: React.FC<FilterBarProps> = ({
               onFilterChange={onFilterChange}
             />
             
-            <button className="flex items-center gap-1.5 px-2.5 py-1.5 text-xs text-indigo-600 bg-indigo-50 rounded-full hover:bg-indigo-100 transition-colors whitespace-nowrap">
-              <Sparkles className="h-3 w-3" />
-              <span>Smart Filters</span>
-            </button>
+            <div className="hidden sm:block">
+              <button className="flex items-center gap-1.5 px-2.5 py-1.5 text-xs text-indigo-600 bg-indigo-50 rounded-full hover:bg-indigo-100 transition-colors whitespace-nowrap">
+                <Sparkles className="h-3 w-3" />
+                <span>Smart Filters</span>
+              </button>
+            </div>
           </div>
         </div>
         

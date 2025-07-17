@@ -112,11 +112,11 @@ export const SortMenu: React.FC<SortMenuProps> = ({
     <div className="relative" ref={menuRef}>
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="flex items-center gap-1.5 px-2.5 py-1.5 sm:px-3 sm:py-2 text-gray-700 bg-white border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors text-xs sm:text-sm relative whitespace-nowrap"
+        className="flex items-center gap-1 px-2 py-1.5 sm:px-3 sm:py-2 text-gray-700 bg-white border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors text-xs relative whitespace-nowrap"
       >
         <ArrowUpDown className="h-4 w-4" />
-        <span className="hidden sm:inline">Sort by {getCurrentSortLabel()}</span>
-        <span className="sm:hidden">Sort</span>
+        <span className="hidden xs:inline sm:inline">Sort by {getCurrentSortLabel()}</span>
+        <span className="xs:hidden sm:hidden">Sort</span>
         {sortCriteria.length > 1 && (
           <span className="absolute -top-1 -right-1 w-5 h-5 bg-indigo-600 text-white text-xs rounded-full flex items-center justify-center">
             {sortCriteria.length}
@@ -128,7 +128,7 @@ export const SortMenu: React.FC<SortMenuProps> = ({
       {isOpen && (
         <>
           <div className="fixed inset-0 z-40" onClick={() => setIsOpen(false)} />
-          <div className="absolute right-0 top-10 sm:top-12 w-72 sm:w-80 bg-white rounded-xl shadow-xl border border-gray-200/60 py-2 z-50">
+          <div className="absolute right-0 top-10 w-64 sm:w-80 bg-white rounded-xl shadow-xl border border-gray-200/60 py-2 z-50">
             <div className="px-4 py-2 border-b border-gray-100">
               <div className="flex items-center justify-between">
                 <p className="text-xs font-semibold text-gray-900 uppercase tracking-wide">Sort Options</p>
