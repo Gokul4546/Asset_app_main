@@ -69,10 +69,7 @@ export const ActionMenu: React.FC<ActionMenuProps> = ({ asset }) => {
   return (
     <div className="relative" ref={menuRef}>
       <button
-        onClick={(e) => {
-          e.stopPropagation();
-          setIsOpen(!isOpen);
-        }}
+        onClick={() => setIsOpen(!isOpen)}
         className="p-2 rounded-lg hover:bg-gray-100 transition-all duration-200 group"
       >
         <MoreVertical className="h-4 w-4 text-gray-400 group-hover:text-gray-600" />
@@ -81,7 +78,7 @@ export const ActionMenu: React.FC<ActionMenuProps> = ({ asset }) => {
       {isOpen && (
         <>
           <div className="fixed inset-0 z-40" onClick={() => setIsOpen(false)} />
-          <div className="absolute right-0 top-12 w-64 bg-white rounded-xl shadow-xl border border-gray-200/60 py-2 z-50 backdrop-blur-sm">
+          <div className="absolute right-0 top-10 w-64 bg-white rounded-xl shadow-xl border border-gray-200/60 py-2 z-50 backdrop-blur-sm">
             <div className="px-4 py-2 border-b border-gray-100">
               <p className="text-xs font-semibold text-gray-900">{asset.name}</p>
               <p className="text-xs text-gray-500">{asset.id}</p>
