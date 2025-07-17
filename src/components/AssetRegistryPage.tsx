@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { ListControls } from './ListControls';
 import { FilterBar } from './FilterBar';
 import { AssetGrid } from './AssetGrid';
@@ -6,15 +6,58 @@ import { AssetTable } from './AssetTable';
 import { Pagination } from './Pagination';
 import { useAssets } from '../hooks/useAssets';
 
-export function AssetRegistryPage() {
-  const { assets, loading } = useAssets();
-  const [viewMode, setViewMode] = useState<'grid' | 'table'>('grid');
-  const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 12;
+interface AssetRegistryPageProps {
+  onAssetClick?: (assetId: string) => void;
+}
 
-  const totalPages = Math.ceil(assets.length / itemsPerPage);
-  const startIndex = (currentPage - 1) * itemsPerPage;
-  const paginatedAssets = assets.slice(startIndex, startIndex + itemsPerPage);
+export function AssetRegistryPage({ onAssetClick }: AssetRegistryPageProps) {
+  const {
+    assets,
+    loading,
+    filters,
+    currentView,
+    setCurrentView,
+    sortColumn,
+    sortDirection,
+    sortCriteria,
+    handleSort,
+    handleMultiSort,
+    activeFilters,
+    handleFilterChange,
+    removeFilter,
+    clearAllFilters,
+    selectedAssets,
+    onSelectionChange,
+    paginatedAssets,
+    totalPages,
+    currentPage,
+    setCurrentPage
+  } = useAssets();
+
+  const handleImport = () => {
+    // Import functionality
+    console.log('Import assets');
+  };
+
+  const handleExport = () => {
+    // Export functionality
+    console.log('Export assets');
+  };
+
+  const handleAddAsset = () => {
+    // Add asset functionality
+    console.log('Add new asset');
+  };
+
+  const handleSelectAll = (checked: boolean) => {
+    // Select all functionality
+    console.log('Select all:', checked);
+  };
+
+  const handleSavedViews = () => {
+    // Saved views functionality
+    console.log('Saved views');
+  };
 
   if (loading) {
     return (
@@ -28,16 +71,47 @@ export function AssetRegistryPage() {
 
   return (
     <div className="p-4 md:p-8">
-      <ListControls />
+      <ListControls 
+        assets={assets}
+        onImport={handleImport}
+        onExport={handleExport}
+        onAddAsset={handleAddAsset}
+      />
       <FilterBar 
-        viewMode={viewMode} 
-        onViewModeChange={setViewMode}
+        assets={assets}
+        filters={filters}
+        currentView={currentView}
+        onViewChange={setCurrentView}
+        currentSort={sortColumn}
+        currentDirection={sortDirection}
+        sortCriteria={sortCriteria}
+        onSort={handleSort}
+        onMultiSort={handleMultiSort}
+        activeFilters={activeFilters}
+        onFilterChange={handleFilterChange}
+        onRemoveFilter={removeFilter}
+        onClearAll={clearAllFilters}
+        onSavedViews={handleSavedViews}
       />
       
-      {viewMode === 'grid' ? (
-        <AssetGrid assets={paginatedAssets} />
+      {currentView === 'grid' ? (
+        <AssetGrid 
+          assets={paginatedAssets}
+          selectedAssets={selectedAssets}
+          onSelectionChange={onSelectionChange}
+          onAssetClick={onAssetClick}
+        />
       ) : (
-        <AssetTable assets={paginatedAssets} />
+        <AssetTable 
+          assets={paginatedAssets}
+          selectedAssets={selectedAssets}
+          onSelectionChange={onSelectionChange}
+          onSelectAll={handleSelectAll}
+          onSort={handleSort}
+          sortColumn={sortColumn}
+          sortDirection={sortDirection}
+          onAssetClick={onAssetClick}
+        />
       )}
       
       <Pagination
